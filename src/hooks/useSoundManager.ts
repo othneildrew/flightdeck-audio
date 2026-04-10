@@ -17,7 +17,7 @@ export function useSoundManager(sounds: SoundFile[]) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const animationFrameRef = useRef<number>();
+  const animationFrameRef = useRef<number | undefined>(undefined);
   const soundInstancesRef = useRef<Map<string, any>>(new Map());
 
   // Initialize PixiJS Sound
@@ -78,7 +78,6 @@ export function useSoundManager(sounds: SoundFile[]) {
     const updateProgress = () => {
       setSoundStates(prevStates => {
         const newStates = new Map(prevStates);
-        let hasPlayingSounds = false;
 
         soundInstancesRef.current.forEach((instance, id) => {
           if (instance && !instance.paused) {
@@ -88,7 +87,6 @@ export function useSoundManager(sounds: SoundFile[]) {
                 ...state,
                 progress: instance.progress || 0,
               });
-              hasPlayingSounds = true;
             }
           }
         });
