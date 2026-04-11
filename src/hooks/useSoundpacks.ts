@@ -7,18 +7,21 @@ import type { Soundpack, SoundFile } from '../types/sound.types';
  */
 export function useSoundpacks() {
   const soundpacks = useMemo(() => {
-    // Use Vite's import.meta.glob to discover all audio files in soundpacks
-    const soundFiles = import.meta.glob('/public/soundpacks/**/*.{mp3,wav,ogg,m4a}', {
+    // Use Vite's import.meta.glob to discover all audio files in soundpacks.
+    // Files must live under src/ (not public/) so Vite can include them in the
+    // module graph, hash them, and prepend the configured base URL.
+    const soundFiles = import.meta.glob('/src/soundpacks/**/*.{mp3,wav,ogg,m4a}', {
       eager: true,
-      as: 'url',
+      query: '?url',
+      import: 'default',
     });
 
     // Group files by soundpack folder
     const soundpackMap = new Map<string, SoundFile[]>();
 
     Object.entries(soundFiles).forEach(([path, url]) => {
-      // Parse the path: /public/soundpacks/[pack-name]/[file-name].mp3
-      const match = path.match(/\/public\/soundpacks\/([^/]+)\/([^/]+)$/);
+      // Parse the path: /src/soundpacks/[pack-name]/[file-name].mp3
+      const match = path.match(/\/src\/soundpacks\/([^/]+)\/([^/]+)$/);
 
       if (match) {
         const [, packName, fileName] = match;
