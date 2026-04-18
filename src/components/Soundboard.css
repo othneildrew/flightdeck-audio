@@ -250,7 +250,8 @@
   left: 0;
   height: 4px;
   background: var(--accent);
-  transition: width 0.1s linear;
+  /* No width transition — the progress value updates at rAF frequency, so any
+     CSS tween makes the bar lag behind the actual audio position. */
   z-index: 0;
 }
 

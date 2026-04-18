@@ -73,43 +73,42 @@ export function useSoundManager(sounds: SoundFile[]) {
     };
   }, [sounds]);
 
-  // Progress tracking loop
+  // Progress tracking loop — a single long-lived rAF that reads instances from
+  // the ref. Must NOT depend on `soundStates`, otherwise the loop's own
+  // setSoundStates call would cancel and restart this effect every frame.
   useEffect(() => {
     const updateProgress = () => {
-      setSoundStates(prevStates => {
-        const newStates = new Map(prevStates);
-
-        soundInstancesRef.current.forEach((instance, id) => {
-          if (instance && !instance.paused) {
-            const state = newStates.get(id);
-            if (state) {
-              newStates.set(id, {
-                ...state,
-                progress: instance.progress || 0,
-              });
-            }
-          }
-        });
-
-        return newStates;
-      });
-
-      // Continue animation frame if there are playing sounds
       if (soundInstancesRef.current.size > 0) {
-        animationFrameRef.current = requestAnimationFrame(updateProgress);
+        setSoundStates(prevStates => {
+          let changed = false;
+          const newStates = new Map(prevStates);
+
+          soundInstancesRef.current.forEach((instance, id) => {
+            if (!instance || instance.paused) return;
+            const state = newStates.get(id);
+            if (!state) return;
+            const progress = instance.progress ?? 0;
+            if (progress !== state.progress) {
+              newStates.set(id, { ...state, progress });
+              changed = true;
+            }
+          });
+
+          return changed ? newStates : prevStates;
+        });
       }
+
+      animationFrameRef.current = requestAnimationFrame(updateProgress);
     };
 
-    if (soundInstancesRef.current.size > 0) {
-      animationFrameRef.current = requestAnimationFrame(updateProgress);
-    }
+    animationFrameRef.current = requestAnimationFrame(updateProgress);
 
     return () => {
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
       }
     };
-  }, [soundStates]);
+  }, []);
 
   // Play or toggle a sound
   const playSound = useCallback((soundId: string) => {
@@ -139,7 +138,7 @@ export function useSoundManager(sounds: SoundFile[]) {
 
     // Play the sound
     try {
-      const instance = sound.play(soundId, {
+      const result = sound.play(soundId, {
         loop: currentState.isLooping,
         singleInstance: true,
         volume: currentState.volume * globalControls.volume,
@@ -162,7 +161,14 @@ export function useSoundManager(sounds: SoundFile[]) {
         },
       });
 
-      soundInstancesRef.current.set(soundId, instance);
+      // sound.play() returns IMediaInstance OR Promise<IMediaInstance>
+      // depending on whether the sound buffer is already decoded. We must
+      // normalize to always store a real instance in the ref, otherwise the
+      // progress-tracking loop reads `.progress` on a Promise → undefined →
+      // progress bar never updates.
+      Promise.resolve(result).then(instance => {
+        soundInstancesRef.current.set(soundId, instance);
+      });
 
       setSoundStates(prev => {
         const newStates = new Map(prev);
