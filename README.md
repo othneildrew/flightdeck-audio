@@ -1,73 +1,80 @@
-# React + TypeScript + Vite
+<div align="center">
+  <h3 align="center">FlightDeck Audio</h3>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+  <p align="center">
+    A web-based soundboard for flight deck audio playback
+    <br />
+    <a href="https://github.com/yourusername/flightdeck-audio/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/yourusername/flightdeck-audio/issues">Request Feature</a>
+  </p>
+</div>
 
-Currently, two official plugins are available:
+## About The Project
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+FlightDeck Audio is a web-based soundboard application created for a graduation project to re-enact an aircraft accident. It allows you to play, loop, and mix multiple audio tracks simultaneously with volume control and real-time playback management.
 
-## React Compiler
+Feel free to use this for flight simulation, educational purposes, audio presentations, or whatever you need.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Built With
 
-## Expanding the ESLint configuration
+[![React][React.js]][React-url]
+[![TypeScript][TypeScript]][TypeScript-url]
+[![Vite][Vite]][Vite-url]
+[![PixiJS][PixiJS]][PixiJS-url]
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Getting Started
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Prerequisites
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+* Node.js (v18 or higher)
+* npm
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### Installation
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+1. Clone the repository
+   ```sh
+   git clone https://github.com/othneildrew/flightdeck-audio.git
+   ```
+2. Install dependencies
+   ```sh
+   npm install
+   ```
+3. Add your soundpacks to `public/soundpacks/[pack-name]/`
+4. Start the development server
+   ```sh
+   npm run dev
+   ```
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Usage
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+1. Place your audio files in a folder under `public/soundpacks/`
+2. Select your soundpack from the dropdown
+3. Click any sound to play it
+4. Use the loop button to enable looping
+5. Control global volume and playback with the control panel
+
+## Contributing
+
+Contributions are welcome! Feel free to open an issue or submit a pull request.
+
+## License
+
+Distributed under the MIT License.
+
+## Acknowledgments
+
+* [Reaper (DAW)](https://www.reaper.fm/)
+* [LevelMix](https://www.izotope.com/en/products/neutron/features/mix-assistant.html)
+* [mp3cut.net](https://mp3cut.net/)
+* [aistemsplitter.online](https://aistemsplitter.online/)
+
+<!-- MARKDOWN LINKS & IMAGES -->
+[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
+[React-url]: https://reactjs.org/
+[TypeScript]: https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white
+[TypeScript-url]: https://www.typescriptlang.org/
+[Vite]: https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white
+[Vite-url]: https://vitejs.dev/
+[PixiJS]: https://img.shields.io/badge/PixiJS-E91E63?style=for-the-badge&logo=pixi&logoColor=white
+[PixiJS-url]: https://pixijs.com/

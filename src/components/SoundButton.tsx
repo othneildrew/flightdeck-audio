@@ -24,6 +24,20 @@ export function SoundButton({
     onToggleLoop(soundId);
   };
 
+  // Parse the display name to extract bracketed number if present
+  const parseName = (name: string) => {
+    const match = name.match(/^(\[\d+\])\s*(.*)$/);
+    if (match) {
+      return {
+        bracket: match[1],
+        text: match[2],
+      };
+    }
+    return { bracket: null, text: name };
+  };
+
+  const { bracket, text } = parseName(displayName);
+
   return (
     <div className="sound-button">
       <button
@@ -33,7 +47,12 @@ export function SoundButton({
         aria-pressed={soundState.isPlaying}
       >
         <div className="sound-button-content">
-          <span className="sound-name">{displayName}</span>
+          <span className="sound-name">
+            {bracket && <span className="sound-bracket">{bracket}</span>}
+            <span className="sound-text-wrapper">
+              <span className="sound-text">{text}</span>
+            </span>
+          </span>
           <div className="sound-icons">
             {soundState.isPlaying ? (
               <span className="icon icon-playing">⏸</span>

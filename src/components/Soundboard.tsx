@@ -49,7 +49,7 @@ export function Soundboard() {
         </div>
         <div className="nav-right">
           <a
-            href="https://github.com/yourusername/flightdeck-audio"
+            href="https://github.com/othneildrew/flightdeck-audio"
             target="_blank"
             rel="noopener noreferrer"
             className="github-link"

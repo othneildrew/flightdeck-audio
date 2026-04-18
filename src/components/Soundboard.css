@@ -192,11 +192,31 @@
   text-align: center;
   line-height: 1.3;
   word-break: break-word;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: center;
+}
+
+.sound-bracket {
+  display: block;
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+.sound-text-wrapper {
+  display: block;
+  width: 100%;
+  min-width: 0;
+}
+
+.sound-text {
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+  word-break: break-word;
 }
 
 .sound-icons {
