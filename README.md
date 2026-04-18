@@ -40,7 +40,7 @@ Feel free to use this for flight simulation, educational purposes, audio present
    ```sh
    npm install
    ```
-3. Add your soundpacks to `public/soundpacks/[pack-name]/`
+3. Add your soundpacks to `src/soundpacks/[pack-name]/`
 4. Start the development server
    ```sh
    npm run dev
@@ -48,7 +48,7 @@ Feel free to use this for flight simulation, educational purposes, audio present
 
 ## Usage
 
-1. Place your audio files in a folder under `public/soundpacks/`
+1. Place your audio files in a folder under `src/soundpacks/`
 2. Select your soundpack from the dropdown
 3. Click any sound to play it
 4. Use the loop button to enable looping
@@ -65,9 +65,9 @@ Distributed under the MIT License.
 ## Acknowledgments
 
 * [Reaper (DAW)](https://www.reaper.fm/)
-* [LevelMix](https://www.izotope.com/en/products/neutron/features/mix-assistant.html)
+* [LevelMix](https://levelmix.io/)
 * [mp3cut.net](https://mp3cut.net/)
-* [aistemsplitter.online](https://aistemsplitter.online/)
+* [stemsplitter.online](https://stemsplitter.online/)
 
 <!-- MARKDOWN LINKS & IMAGES -->
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
